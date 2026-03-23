@@ -263,8 +263,8 @@ func (s *Server) callModel(ctx context.Context, model *ModelConfig, prompt strin
 		return "", fmt.Errorf("create request: %w", err)
 	}
 	httpReq.Header.Set("Content-Type", "application/json")
-	if model.APIKey != "" {
-		httpReq.Header.Set("Authorization", "Bearer "+model.APIKey)
+	if apiKey := ResolveAPIKey(*model); apiKey != "" {
+		httpReq.Header.Set("Authorization", "Bearer "+apiKey)
 	}
 
 	resp, err := s.client.Do(httpReq)

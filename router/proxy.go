@@ -147,8 +147,9 @@ func (s *Server) handleChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	upReq.Header.Set("Content-Type", "application/json")
-	if model.APIKey != "" {
-		upReq.Header.Set("Authorization", "Bearer "+model.APIKey)
+	apiKey := ResolveAPIKey(*model)
+	if apiKey != "" {
+		upReq.Header.Set("Authorization", "Bearer "+apiKey)
 	}
 
 	// Proxy the response (including streaming).

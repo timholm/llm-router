@@ -1,5 +1,9 @@
 # llm-router configuration
 # Claude model pricing as of March 2026
+#
+# Authentication: If api_key is empty, the router auto-discovers
+# Claude Code Max OAuth credentials from ~/.claude/.credentials.json.
+# No manual API key configuration needed.
 
 models:
   # Tier 1: Fast + cheap for simple tasks
@@ -7,7 +11,6 @@ models:
     provider: anthropic
     model: claude-haiku-4-5-20251001
     base_url: https://api.anthropic.com
-    api_key: $ANTHROPIC_API_KEY
     cost_per_1k_in: 0.0008
     cost_per_1k_out: 0.004
     max_tokens: 200000
@@ -18,7 +21,6 @@ models:
     provider: anthropic
     model: claude-sonnet-4-6
     base_url: https://api.anthropic.com
-    api_key: $ANTHROPIC_API_KEY
     cost_per_1k_in: 0.003
     cost_per_1k_out: 0.015
     max_tokens: 200000
@@ -29,7 +31,6 @@ models:
     provider: anthropic
     model: claude-opus-4-6
     base_url: https://api.anthropic.com
-    api_key: $ANTHROPIC_API_KEY
     cost_per_1k_in: 0.015
     cost_per_1k_out: 0.075
     max_tokens: 200000
