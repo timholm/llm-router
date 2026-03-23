@@ -1,0 +1,28 @@
+# Multi-Perspective Analysis workflow
+# Two parallel cheap analyses merged by a capable model.
+#
+# Step 1a: Cheap model analyzes from technical perspective (parallel)
+# Step 1b: Cheap model analyzes from business perspective (parallel)
+# Step 2: Mid-tier model synthesizes both perspectives
+
+start_ops: [technical, business]
+end_ops: [synthesize]
+
+ops:
+  technical:
+    prompt: "Analyze this from a purely technical perspective. Focus on feasibility, architecture, and implementation challenges."
+    tier: 1
+    max_tokens: 512
+    output_ops: [synthesize]
+
+  business:
+    prompt: "Analyze this from a business perspective. Focus on market fit, revenue potential, and competitive landscape."
+    tier: 1
+    max_tokens: 512
+    output_ops: [synthesize]
+
+  synthesize:
+    prompt: "Synthesize the technical and business analyses above into a unified recommendation with clear next steps."
+    tier: 2
+    max_tokens: 1024
+    input_ops: [technical, business]

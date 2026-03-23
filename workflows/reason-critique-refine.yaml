@@ -1,0 +1,35 @@
+# Reason → Critique → Refine workflow
+# Ported from Halo's adv_reason_3 template (arXiv:2509.02121)
+#
+# Step 1: Cheap model does initial chain-of-thought reasoning
+# Step 2: Mid-tier model critiques the reasoning
+# Step 3: Mid-tier model produces refined final answer
+#
+# Usage:
+#   curl http://localhost:8080/v1/workflows -d '{
+#     "workflow": "<this yaml>",
+#     "input": "How many r's are in strawberry?"
+#   }'
+
+start_ops: [reason]
+end_ops: [refine]
+
+ops:
+  reason:
+    prompt: "Think step by step about this question. Show your reasoning clearly."
+    tier: 1
+    max_tokens: 1024
+    output_ops: [critique]
+
+  critique:
+    prompt: "Review the reasoning above. Identify any errors, gaps, or logical fallacies. Be specific."
+    tier: 2
+    max_tokens: 512
+    input_ops: [reason]
+    output_ops: [refine]
+
+  refine:
+    prompt: "Considering the original reasoning and the critique, provide a correct and complete final answer."
+    tier: 2
+    max_tokens: 512
+    input_ops: [critique]

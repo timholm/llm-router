@@ -1,0 +1,64 @@
+# llm-router configuration
+# Claude model pricing as of March 2026
+
+models:
+  # Tier 1: Fast + cheap for simple tasks
+  - name: claude-haiku
+    provider: anthropic
+    model: claude-haiku-4-5-20251001
+    base_url: https://api.anthropic.com
+    api_key: $ANTHROPIC_API_KEY
+    cost_per_1k_in: 0.0008
+    cost_per_1k_out: 0.004
+    max_tokens: 200000
+    tier: 1
+
+  # Tier 2: Best balance of speed + quality
+  - name: claude-sonnet
+    provider: anthropic
+    model: claude-sonnet-4-6
+    base_url: https://api.anthropic.com
+    api_key: $ANTHROPIC_API_KEY
+    cost_per_1k_in: 0.003
+    cost_per_1k_out: 0.015
+    max_tokens: 200000
+    tier: 2
+
+  # Tier 3: Most capable for complex reasoning
+  - name: claude-opus
+    provider: anthropic
+    model: claude-opus-4-6
+    base_url: https://api.anthropic.com
+    api_key: $ANTHROPIC_API_KEY
+    cost_per_1k_in: 0.015
+    cost_per_1k_out: 0.075
+    max_tokens: 200000
+    tier: 3
+
+  # Local models via Ollama (free, tier 1)
+  # - name: llama-local
+  #   provider: ollama
+  #   model: llama3.2
+  #   base_url: http://localhost:11434
+  #   cost_per_1k_in: 0
+  #   cost_per_1k_out: 0
+  #   max_tokens: 128000
+  #   tier: 1
+
+classifier:
+  tier1_max: 30   # score 0-30  → claude-haiku
+  tier2_max: 70   # score 31-70 → claude-sonnet
+                   # score 71+   → claude-opus
+
+cache:
+  enabled: true
+  max_size: 1000
+  ttl_sec: 300
+  similarity_thresh: 0.85
+
+learned:
+  threshold: 0.5
+
+server:
+  read_timeout_sec: 30
+  write_timeout_sec: 120

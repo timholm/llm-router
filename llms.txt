@@ -1,0 +1,18 @@
+# llm-router
+
+> Cost-optimizing reverse proxy for LLM APIs — routes each request to the cheapest model that can handle it.
+
+## Docs
+
+- [README](README.md): Overview, install, usage, API reference, architecture
+- [config.yaml](config.yaml): Example configuration with model pricing and tier assignments
+- [router/classifier.go](router/classifier.go): Heuristic complexity scorer — extracts signals from requests and returns 0-100 score
+- [router/proxy.go](router/proxy.go): HTTP server, routing logic, upstream proxying, stats tracking
+- [router/config.go](router/config.go): YAML config loading with environment variable expansion
+- [router/types.go](router/types.go): OpenAI-compatible request/response types
+- [router/pool.go](router/pool.go): Health-aware backend pool — tracks status, in-flight requests, latency, and load-balances across backends
+- [router/workflow.go](router/workflow.go): DAG workflow parser — YAML to Op graph with topological sort and cycle detection
+- [router/executor.go](router/executor.go): Workflow execution engine — dependency-aware parallel execution with cache-aware routing
+- [workflows/reason-critique-refine.yaml](workflows/reason-critique-refine.yaml): Example 3-step reasoning workflow
+- [workflows/multi-perspective.yaml](workflows/multi-perspective.yaml): Example parallel-branch analysis workflow
+- [main.go](main.go): CLI entry point — parses flags, loads config, starts server
