@@ -47,9 +47,9 @@ models:
   #   tier: 1
 
 classifier:
-  tier1_max: 30   # score 0-30  → claude-haiku
-  tier2_max: 70   # score 31-70 → claude-sonnet
-                   # score 71+   → claude-opus
+  tier1_max: 25   # score 0-25  → claude-haiku (simple queries, no tools)
+  tier2_max: 85   # score 26-85 → claude-sonnet (tool use, code, moderate reasoning)
+                   # score 86+   → claude-opus (extreme complexity only)
 
 cache:
   enabled: true
