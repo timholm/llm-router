@@ -59,7 +59,8 @@ func NewServer(cfg *Config) *Server {
 func (s *Server) ListenAndServe(addr string) error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/v1/chat/completions", s.handleChat)
-	mux.HandleFunc("/v1/messages", s.handleMessages) // Anthropic-native format (Claude Code uses this)
+	mux.HandleFunc("/v1/messages", s.handleMessages)    // Anthropic-native format (Claude Code uses this)
+	mux.HandleFunc("/v1/embeddings", s.handleEmbeddings) // Local hash-based embeddings for paper-embedder
 	mux.HandleFunc("/v1/workflows", s.handleWorkflow)
 	mux.HandleFunc("/v1/feedback", s.handleFeedback)
 	mux.HandleFunc("/v1/backends", s.handleBackends)
